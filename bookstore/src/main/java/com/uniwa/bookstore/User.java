@@ -4,9 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
+
 import jakarta.persistence.Column;
 
 @Entity
@@ -24,6 +27,9 @@ public class User {
     @NotBlank(message = "Password is mandatory")
     @Size(min = 6, max = 100, message = "Password must be at least 6 characters long")
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<FavoriteList> favoriteLists;
 
     // Default constructor (required by JPA)
     public User() {
