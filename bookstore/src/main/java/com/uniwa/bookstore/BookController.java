@@ -1,9 +1,9 @@
 package com.uniwa.bookstore;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,41 +12,83 @@ import java.util.Optional;
 @RequestMapping("/api/books")
 public class BookController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
-
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
-    // Fetch all books
+    // 1. Get a list of all books
     @GetMapping
     public List<Book> getAllBooks() {
-        logger.debug("Fetching all books");
-        List<Book> books = bookRepository.findAll();
-        logger.debug("Fetched {} books", books.size());
-        return books;
+        return bookService.getAllBooks();
     }
 
-    // Fetch a book by ID (ID is now of type long)
-    @GetMapping("/{id}")
-    public Book getBookById(@PathVariable long id) {
-        logger.debug("Fetching book with ID: {}", id);
-
-        Optional<Book> book = bookRepository.findById(id);
-
+    // 2. Get a specific book by ID
+    @GetMapping("/{bookid}")
+    public ResponseEntity<Book> getBookById(@PathVariable Long bookid) {
+        Optional<Book> book = bookService.getBookById(bookid);
         if (book.isPresent()) {
-            logger.debug("Found book: {}", book.get());
-            return book.get(); // Return the found book
-        } else {
-            logger.error("Book not found with ID: {}", id);
-            throw new BookNotFoundException(id); // Custom exception for not found books
+            return ResponseEntity.ok(book.get());
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-}
 
-// Custom exception to handle book not found scenario
-@ResponseStatus(value = org.springframework.http.HttpStatus.NOT_FOUND)
-class BookNotFoundException extends RuntimeException {
-    public BookNotFoundException(long id) {
-        super("Book not found with ID: " + id);
+    // 3. Add a new book
+    @PostMapping
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+        Book newBook = bookService.addBook(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
+    }
+
+    // 4. Update an existing book
+    @PutMapping("/{bookid}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long bookid, @RequestBody Book book) {
+        Optional<Book> existingBook = bookService.getBookById(bookid);
+        if (existingBook.isPresent()) {
+            book.setId(bookid);
+            Book updatedBook = bookService.updateBook(book);
+            return ResponseEntity.ok(updatedBook);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    // 5. Rent a book
+    @PostMapping("/rent/{bookid}")
+    public ResponseEntity<String> rentBook(@PathVariable Long bookid) {
+        Optional<Book> book = bookService.getBookById(bookid);
+        if (book.isPresent()) {
+            if (book.get().getAvailableCopies() > 0) {
+                // Decrease the available copies and rent the book
+                bookService.updateAvailableCopies(bookid, book.get().getAvailableCopies() - 1);
+                return ResponseEntity.ok("Book rented successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No available copies left.");
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
+    }
+
+    // 6. Return a book
+    @PostMapping("/return/{bookid}")
+    public ResponseEntity<String> returnBook(@PathVariable Long bookid) {
+        Optional<Book> book = bookService.getBookById(bookid);
+        if (book.isPresent()) {
+            // Increase the available copies and return the book
+            bookService.updateAvailableCopies(bookid, book.get().getAvailableCopies() + 1);
+            return ResponseEntity.ok("Book returned successfully.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
+    }
+
+    // 7. Get all books with available copies greater than 0
+    @GetMapping("/available")
+    public List<Book> getAvailableBooks() {
+        return bookService.getAvailableBooks();
+    }
+
+    // 8. Get all overdue books (Example, you might need a rental system for this)
+    // This would typically involve rentals, but it’s included here as a
+    // placeholder.
+    @GetMapping("/overdue")
+    public ResponseEntity<String> getOverdueBooks() {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("Overdue books feature is not yet implemented.");
     }
 }
