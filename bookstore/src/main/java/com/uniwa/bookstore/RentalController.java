@@ -2,11 +2,13 @@ package com.uniwa.bookstore;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,17 +127,18 @@ public class RentalController {
         }
     }
 
-    // Get all rented books by a user
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Rental>> getRentalsByUser(@PathVariable Long userId) {
-        List<Rental> rentals = rentalService.getRentalsByUser(userId);
+    // // Get all rented books by a user
+    // @GetMapping("/user/{userId}")
+    // public ResponseEntity<List<Rental>> getRentalsByUser(@PathVariable Long
+    // userId) {
+    // List<Rental> rentals = rentalService.getRentalsByUser(userId);
 
-        if (rentals.isEmpty()) {
-            return ResponseEntity.noContent().build(); // No rentals found for the user
-        }
+    // if (rentals.isEmpty()) {
+    // return ResponseEntity.noContent().build(); // No rentals found for the user
+    // }
 
-        return ResponseEntity.ok(rentals);
-    }
+    // return ResponseEntity.ok(rentals);
+    // }
 
     // Get all active rentals by a user
     @GetMapping("/user/{userId}/active")
@@ -147,5 +150,29 @@ public class RentalController {
         }
 
         return ResponseEntity.ok(rentals);
+    }
+
+    @Autowired
+    private RentalRepository rentalRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @GetMapping("/user/{userId}")
+    public List<RentalWithBookDetails> getUserRentals(@PathVariable Long userId) {
+        // Fetch all rentals for the user
+        List<Rental> rentals = rentalRepository.findByUserId(userId);
+        List<RentalWithBookDetails> rentalWithBookDetailsList = new ArrayList<>();
+
+        for (Rental rental : rentals) {
+            // Fetch book details based on bookId from the rental
+            Book book = bookRepository.findById(rental.getBook()).orElse(null);
+            if (book != null) {
+                RentalWithBookDetails rentalWithBookDetails = new RentalWithBookDetails(rental, book);
+                rentalWithBookDetailsList.add(rentalWithBookDetails);
+            }
+        }
+
+        return rentalWithBookDetailsList;
     }
 }
