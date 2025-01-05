@@ -51,12 +51,12 @@ VALUES
 -- Add Books
 INSERT INTO book (title, author, genre, isbn, total_copies, available_copies) 
 VALUES
-('The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction', '9780743273565', 10, 10),
-('To Kill a Mockingbird', 'Harper Lee', 'Fiction', '9780061120084', 8, 8),
-('1984', 'George Orwell', 'Dystopian', '9780451524935', 5, 5),
-('Pride and Prejudice', 'Jane Austen', 'Romance', '9781503290563', 10, 10),
-('The Catcher in the Rye', 'J.D. Salinger', 'Fiction', '9780316769488', 7, 7),
-('Moby Dick', 'Herman Melville', 'Adventure', '9781503280786', 6, 6);
+('The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction', '9780743273565', 10, 9),  -- 1 rented
+('To Kill a Mockingbird', 'Harper Lee', 'Fiction', '9780061120084', 8, 7),       -- 1 rented
+('1984', 'George Orwell', 'Dystopian', '9780451524935', 5, 3),                   -- 2 rented
+('Pride and Prejudice', 'Jane Austen', 'Romance', '9781503290563', 10, 9),       -- 1 rented
+('The Catcher in the Rye', 'J.D. Salinger', 'Fiction', '9780316769488', 7, 6),   -- 1 rented
+('Moby Dick', 'Herman Melville', 'Adventure', '9781503280786', 6, 5);            -- 1 rented
 
 -- Add Rentals
 INSERT INTO rental (user_id, book_id, due_date) 
