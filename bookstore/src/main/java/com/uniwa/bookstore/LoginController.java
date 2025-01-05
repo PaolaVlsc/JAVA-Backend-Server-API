@@ -23,15 +23,23 @@ public class LoginController {
     private UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<LoginResponse> login(@RequestBody User user) {
         logger.debug("Login request received for username: {}", user.getUsername());
+
+        // Find the user by username
         User foundUser = userRepository.findByUsername(user.getUsername());
+
+        // Check if the user exists and password matches
         if (foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
             logger.debug("Login successful for username: {}", user.getUsername());
-            return ResponseEntity.ok("Login successful");
+
+            // Create a LoginResponse object with the success message
+            LoginResponse loginResponse = new LoginResponse(foundUser.getId(), foundUser.getUsername(),
+                    "Login successful");
+            return ResponseEntity.ok(loginResponse);
         } else {
             logger.debug("Invalid credentials for username: {}", user.getUsername());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
