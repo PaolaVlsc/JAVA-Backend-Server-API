@@ -96,3 +96,32 @@ FROM rental
 JOIN user ON rental.user_id = user.id
 JOIN book ON rental.book_id = book.id
 WHERE rental.due_date < CURRENT_DATE AND rental.status = 'Active';
+
+
+
+USE bookshop;
+
+-- Drop the table if it already exists
+DROP TABLE IF EXISTS favorite_list;
+
+-- Create the favorite_list table
+CREATE TABLE favorite_book (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BIGINT NOT NULL,
+    book_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES book(id) ON DELETE CASCADE
+);
+
+-- Insert example data
+INSERT INTO favorite_book (user_id, book_id) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(3, 4),
+(5, 1),
+(5, 2);
+
+-- Query to verify the table content
+SELECT * FROM favorite_book;
