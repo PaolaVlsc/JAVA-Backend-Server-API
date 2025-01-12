@@ -6,7 +6,6 @@ public class FavoriteBookWithDetails {
     private Long bookId;
     private String bookTitle;
     private String bookAuthor;
-    private String createdAt;
 
     // Constructor
     public FavoriteBookWithDetails(Long id, Long userId, Long bookId, String bookTitle, String bookAuthor) {
@@ -56,13 +55,5 @@ public class FavoriteBookWithDetails {
 
     public void setBookAuthor(String bookAuthor) {
         this.bookAuthor = bookAuthor;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
     }
 }
