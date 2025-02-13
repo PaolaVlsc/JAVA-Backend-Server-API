@@ -1,4 +1,4 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.model;
 
 import jakarta.persistence.*;
 

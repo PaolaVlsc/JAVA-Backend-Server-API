@@ -1,5 +1,8 @@
 package com.uniwa.bookstore;
 
+import com.uniwa.bookstore.model.Book;
+import com.uniwa.bookstore.model.User;
+
 import jakarta.persistence.*;
 
 @Entity

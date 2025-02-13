@@ -1,4 +1,4 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
+
+import com.uniwa.bookstore.FavoriteList;
 
 import jakarta.persistence.Column;
 

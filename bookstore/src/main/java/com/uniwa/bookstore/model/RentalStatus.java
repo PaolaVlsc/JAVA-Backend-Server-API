@@ -1,4 +1,4 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.model;
 
 public enum RentalStatus {
     Active,

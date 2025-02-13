@@ -1,4 +1,4 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,6 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.uniwa.bookstore.model.Book;
+import com.uniwa.bookstore.model.Rental;
+import com.uniwa.bookstore.model.RentalStatus;
+import com.uniwa.bookstore.model.RentalWithBookDetails;
+import com.uniwa.bookstore.repository.BookRepository;
+import com.uniwa.bookstore.repository.RentalRepository;
+import com.uniwa.bookstore.service.RentalService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

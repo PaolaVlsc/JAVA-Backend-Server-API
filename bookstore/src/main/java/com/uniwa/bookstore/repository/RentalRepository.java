@@ -1,10 +1,13 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.uniwa.bookstore.model.Rental;
+import com.uniwa.bookstore.model.RentalStatus;
 
 @Repository
 public interface RentalRepository extends JpaRepository<Rental, Long> {

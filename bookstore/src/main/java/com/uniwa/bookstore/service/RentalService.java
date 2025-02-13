@@ -1,10 +1,17 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.uniwa.bookstore.controller.RentalController;
+import com.uniwa.bookstore.model.Book;
+import com.uniwa.bookstore.model.Rental;
+import com.uniwa.bookstore.model.RentalStatus;
+import com.uniwa.bookstore.repository.BookRepository;
+import com.uniwa.bookstore.repository.RentalRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -1,6 +1,11 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.service;
 
 import org.springframework.stereotype.Service;
+
+import com.uniwa.bookstore.controller.FavoriteBookWithDetails;
+import com.uniwa.bookstore.model.FavoriteBook;
+import com.uniwa.bookstore.repository.BookRepository;
+import com.uniwa.bookstore.repository.FavoriteBookRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

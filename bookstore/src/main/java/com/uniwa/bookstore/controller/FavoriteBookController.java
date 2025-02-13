@@ -1,8 +1,11 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.uniwa.bookstore.model.FavoriteBook;
+import com.uniwa.bookstore.service.FavoriteBookService;
 
 import java.util.List;
 

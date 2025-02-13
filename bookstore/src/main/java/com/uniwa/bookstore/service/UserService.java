@@ -1,7 +1,10 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.uniwa.bookstore.model.User;
+import com.uniwa.bookstore.repository.UserRepository;
 
 import java.util.Optional;
 

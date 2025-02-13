@@ -1,4 +1,4 @@
-package com.uniwa.bookstore;
+package com.uniwa.bookstore.controller;
 
 public class FavoriteBookWithDetails {
     private Long id;
