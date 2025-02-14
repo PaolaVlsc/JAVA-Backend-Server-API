@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.uniwa.bookstore.model.FavoriteBook;
+import com.uniwa.bookstore.model.FavoriteBookWithDetails;
 import com.uniwa.bookstore.service.FavoriteBookService;
 
 import java.util.List;

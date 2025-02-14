@@ -23,18 +23,23 @@ public class Book {
     @Column(name = "available_copies")
     private Integer availableCopies; // Changed from int to Integer
 
+    @Column(name = "short_description")
+    private String shortDescription; // New field
+
     // Default constructor (required by JPA)
     public Book() {
     }
 
     // Parameterized constructor
-    public Book(String title, String author, String genre, String isbn, int totalCopies, Integer availableCopies) {
+    public Book(String title, String author, String genre, String isbn, int totalCopies, Integer availableCopies,
+            String shortDescription) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.isbn = isbn;
         this.totalCopies = totalCopies;
         this.availableCopies = availableCopies;
+        this.shortDescription = shortDescription; // Initialize new field
     }
 
     // Getters and Setters
@@ -94,6 +99,14 @@ public class Book {
         this.availableCopies = availableCopies;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -104,6 +117,7 @@ public class Book {
                 ", isbn='" + isbn + '\'' +
                 ", totalCopies=" + totalCopies +
                 ", availableCopies=" + availableCopies +
+                ", shortDescription='" + shortDescription + '\'' + // Include new field in toString
                 '}';
     }
 }
